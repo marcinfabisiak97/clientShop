@@ -6,6 +6,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useAppSelector, useAppDispatch } from "../redux/store";
 const Container = styled.div`
   display: flex;
   ${mobile({ flexDirection: "column" })};
@@ -64,6 +65,7 @@ const Mail = styled.div`
   margin-left: 10px;
 `;
 const Footer = () => {
+  const loggedIn = useAppSelector((state) => state.user.loggedIn);
   return (
     <Container>
       <Left>
@@ -78,9 +80,17 @@ const Footer = () => {
       <Center>
         <Title>Links</Title>
         <List>
-          <ListItem>My Account</ListItem>
-          <ListItem>Order Tracking</ListItem>
-          <ListItem>Terms</ListItem>
+          {loggedIn ? (
+            <>
+              <ListItem>My Account</ListItem>
+              <ListItem>Order Tracking</ListItem>
+              <ListItem>Terms</ListItem>
+            </>
+          ) : (
+            <>
+              <ListItem>Terms</ListItem>
+            </>
+          )}
         </List>
       </Center>
       <Right>
