@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { popularProducts } from "../data";
 import Product from "./Product";
 import { mobile } from "../responsive";
-
+import { publicRequest } from "../requestMethods";
 type ProductProps = {
   _id: string;
   img: string;
@@ -15,6 +15,7 @@ type ProductProps = {
   description: string;
   quantity: number;
 };
+
 type Filters = {
   [key: string]: string;
 };
@@ -42,10 +43,8 @@ const Products: React.FC<{
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await axios.get(
-          cat
-            ? `http://localhost:5000/api/products?category=${cat}`
-            : "http://localhost:5000/api/products"
+        const res = await publicRequest.get(
+          cat ? `/products?category=${cat}` : "/products"
         );
 
         setProducts(res.data);
