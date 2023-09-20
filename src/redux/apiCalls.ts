@@ -5,7 +5,7 @@ import {
   registerSuccess,
   registerFailure,
 } from "./newUserSlice";
-import { addProduct, removeProduct } from "./cartSlice";
+import { addProduct } from "./cartSlice";
 import { AppDispatch } from "./store";
 
 interface Order {

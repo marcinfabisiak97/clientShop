@@ -5,6 +5,7 @@ import { mobile } from "../responsive";
 import { useAppSelector, useAppDispatch } from "../redux/store";
 import { logOut } from "../redux/userSlice";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 const Container = styled.div`
   height: 100%;
 `;
@@ -26,7 +27,7 @@ const Center = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 `;
 const Right = styled.div`
   flex: 1;
@@ -48,18 +49,12 @@ const StyledLink = styled(Link)`
   color: inherit;
 `;
 const Navbar = () => {
-  const quantity = useAppSelector((state) => state.cart.quantity);
   const dispatch = useAppDispatch();
+  const quantity = useAppSelector((state) => state.cart.quantity);
   const loggedIn = useAppSelector((state) => state.user.loggedIn);
-  const persistRoot = localStorage.getItem("persist:root");
-
-  let userName = null;
-  if (loggedIn && persistRoot) {
-    const currentUser = JSON.parse(JSON.parse(persistRoot).user).currentUser;
-    if (currentUser && currentUser.others && currentUser.others.username) {
-      userName = currentUser.others.username;
-    }
-  }
+  const userName = useAppSelector(
+    (state) => state.user.currentUser.others?.username
+  );
   return (
     <Container>
       <Wrapper>
@@ -75,7 +70,7 @@ const Navbar = () => {
         <Right>
           {loggedIn ? (
             <>
-              <MenuItem>Zalogowanay jako:{userName} </MenuItem>
+              <MenuItem>Zalogowanay jako: {userName} </MenuItem>
               <MenuItem onClick={() => dispatch(logOut())}>Logout</MenuItem>
             </>
           ) : (
