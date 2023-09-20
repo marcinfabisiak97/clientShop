@@ -101,7 +101,7 @@ const Login = () => {
             placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button onClick={handleLogin} disabled={isFetching}>
+          <Button onClick={handleLogin} disabled={isLogged}>
             LOGIN
           </Button>
           <Link>DO NOT REMEBER THE PASSWORD?</Link>
