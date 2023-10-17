@@ -1,41 +1,47 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router";
 import { userRequest } from "../requestMethods";
 import { useAppDispatch, useAppSelector } from "../redux/store";
-import { orderFailure, orderSuccess } from "../redux/orderSlice";
+import { orderFailure } from "../redux/orderSlice";
+import { clearCart } from "../redux/cartSlice";
+import { Link } from "react-router-dom";
 const Success = () => {
   const location = useLocation();
-  const data = location.state.data;
+  const data = location.state ? location.state.data : false;
   const cart = useAppSelector((state) => state.cart);
-  const order = useAppSelector((state) => state.order);
-  const currentUser = useAppSelector((state) => state.user.currentUser);
 
   const dispatch = useAppDispatch();
   const [orderId, setOrderId] = useState(null);
-  console.log(order);
+  const orderCreated = useRef<boolean>(false);
   const createOrder = async () => {
-    try {
-      const res = await userRequest.post("/orders", {
-        userId: location.state.data.id,
-        products: cart.products.map((item) => ({
-          productId: item._id,
-          quantity: item.quantity,
-        })),
-        amount: cart.total,
-        address: data.billing_details.address,
-      });
-      setOrderId(res.data._id);
-    } catch (error) {
-      console.log(error);
+    if (!orderCreated.current) {
+      try {
+        const res = await userRequest.post("/orders", {
+          userId: location.state.data.id,
+          products: cart.products.map((item) => ({
+            productId: item._id,
+            quantity: item.quantity,
+          })),
+          amount: cart.total,
+          address: data.billing_details ? data.billing_details.address : null,
+        });
+        setOrderId(res.data._id);
+        orderCreated.current = true;
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
   useEffect(() => {
-    dispatch(orderFailure());
     return () => {
-      order.paid && createOrder();
+      if (data.paid) {
+        createOrder();
+      }
+      dispatch(clearCart());
+      dispatch(orderFailure());
     };
-  }, []);
+  }, [data.paid]);
 
   return (
     <div
@@ -47,10 +53,12 @@ const Success = () => {
         justifyContent: "center",
       }}
     >
-      {orderId
+      {orderId !== null
         ? `Order has been created successfully. Your order number is ${orderId}`
-        : `Successfull. Your order is being prepared...`}
-      <button style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button>
+        : "Order generating"}
+      <Link to={`/`}>
+        <button style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button>{" "}
+      </Link>
     </div>
   );
 };

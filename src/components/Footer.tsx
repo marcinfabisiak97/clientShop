@@ -71,10 +71,10 @@ const Footer = () => {
       <Left>
         <Logo>FABICO</Logo>
         <Description>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam quo
-          blanditiis ipsa veritatis nostrum perspiciatis consequatur nobis id
-          officia unde. Voluptatibus expedita, dolor error aliquam laborum
-          molestiae velit recusandae magni?
+          Czy wiesz, że spożywanie świeżo wyciskanych soków z blenderów może
+          przynieść wiele korzyści dla Twojego zdrowia? To nie tylko pyszne, ale
+          także pełne witamin i składników odżywczych napoje, które mogą
+          znacząco wpłynąć na Twoje samopoczucie.
         </Description>
       </Left>
       <Center>

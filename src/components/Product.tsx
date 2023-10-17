@@ -1,15 +1,13 @@
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import SearchIcon from "@mui/icons-material/Search";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../redux/store";
 import { addProduct } from "../redux/cartSlice";
-
 type ProductProps = {
   _id: string;
   img: string;

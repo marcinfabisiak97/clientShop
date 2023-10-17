@@ -5,7 +5,6 @@ import { mobile } from "../responsive";
 import { useAppSelector, useAppDispatch } from "../redux/store";
 import { logOut } from "../redux/userSlice";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 const Container = styled.div`
   height: 100%;
 `;
@@ -71,15 +70,15 @@ const Navbar = () => {
           {loggedIn ? (
             <>
               <MenuItem>Zalogowanay jako: {userName} </MenuItem>
-              <MenuItem onClick={() => dispatch(logOut())}>Logout</MenuItem>
+              <MenuItem onClick={() => dispatch(logOut())}>Wylogowanie</MenuItem>
             </>
           ) : (
             <>
               <MenuItem>
-                <LinkTag to="/register">REGISTER </LinkTag>
+                <LinkTag to="/register">Rejestracja </LinkTag>
               </MenuItem>
               <MenuItem>
-                <LinkTag to="/login">SIGN IN </LinkTag>
+                <LinkTag to="/login">Logowanie </LinkTag>
               </MenuItem>
             </>
           )}

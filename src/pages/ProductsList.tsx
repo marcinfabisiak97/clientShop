@@ -42,21 +42,21 @@ const ProductsList = () => {
     <Container>
       <FilterContainer>
         <Filter>
-          <FilterText>Filter Products:</FilterText>
+          <FilterText>Filtrowanie:</FilterText>
           <Select name="color" onChange={handleFilters}>
             <Option disabled>colors</Option>
-            <Option>all</Option>
-            <Option>blue</Option>
-            <Option>green</Option>
-            <Option>black</Option>
+            <Option value="all">wszystko</Option>
+            <Option value="blue">niebieski</Option>
+            <Option value="green">zielony</Option>
+            <Option value="black">czarny</Option>
           </Select>
         </Filter>
         <Filter>
-          <FilterText>Sort Products:</FilterText>
+          <FilterText>Sortowanie:</FilterText>
           <Select onChange={(e) => setSort(e.target.value)}>
-            <Option value="newest">newest</Option>
-            <Option value="asc">asc</Option>
-            <Option value="desc">desc</Option>
+            <Option value="newest">najnowszy</Option>
+            <Option value="asc">najnisza cena</Option>
+            <Option value="desc">najwyższa cena</Option>
           </Select>
         </Filter>
       </FilterContainer>

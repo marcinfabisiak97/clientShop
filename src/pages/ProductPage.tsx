@@ -157,7 +157,7 @@ const ProductPage = () => {
               <Price>{product.price}PLN</Price>
               <FilterContainer>
                 <Filter>
-                  <FilterTitle>Color</FilterTitle>
+                  <FilterTitle>kolor</FilterTitle>
                   {filter
                     .filter((item) => item.color[0] !== product.color[0])
                     .map((item, index) => (
@@ -173,7 +173,7 @@ const ProductPage = () => {
                   <Amount>{quantity}</Amount>
                   <AddIcon onClick={() => handleQuantity("inc")} />
                 </AmountContainer>
-                <Button onClick={() => handleClick()}>Add to cart</Button>
+                <Button onClick={() => handleClick()}>Dodaj do koszyka</Button>
               </AddContainer>
             </InfoContainer>
           </Wrapper>

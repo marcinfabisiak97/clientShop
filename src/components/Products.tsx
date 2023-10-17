@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import styled from "styled-components";
-import { popularProducts } from "../data";
 import Product from "./Product";
 import { mobile } from "../responsive";
 import { publicRequest } from "../requestMethods";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 type ProductProps = {
   _id: string;
   img: string;
@@ -26,10 +25,8 @@ const Container = styled.div`
   justify-content: space-between;
   ${mobile({ padding: "0" })};
 `;
-const Paragraph = styled.p`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const Wraper = styled.div`
+  margin: 0 auto;
 `;
 const Products: React.FC<{
   cat?: string;
@@ -89,7 +86,11 @@ const Products: React.FC<{
   return (
     <Container>
       {loading ? (
-        <Paragraph>Pobieranie</Paragraph>
+        <Wraper>
+          <SkeletonTheme baseColor="#f5fbfd" highlightColor="#037878">
+            <Skeleton circle height={200} width={200} />
+          </SkeletonTheme>
+        </Wraper>
       ) : (
         filteredProducts.map((product, index) => (
           <Product product={product} key={index} />

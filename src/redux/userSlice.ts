@@ -5,9 +5,11 @@ interface Others {
 }
 interface CurrentUser {
   others?: Others;
+  accessToken?: string;
 }
 interface User {
   currentUser: CurrentUser;
+
   isFetching: boolean;
   error: boolean;
   loggedIn: boolean;

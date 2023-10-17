@@ -6,7 +6,8 @@ import { useAppDispatch, useAppSelector } from "../redux/store";
 import { addOrder, sendData } from "../redux/apiCalls";
 import { clearCart } from "../redux/cartSlice";
 import { sendEmail } from "../redux/apiCalls";
-import { contactData, resetContactData } from "../redux/userDataSlice";
+import { contactData } from "../redux/userDataSlice";
+import { userRequest } from "../requestMethods";
 const Container = styled.div`
   height: 100vh;
   overflow: hidden;
@@ -168,7 +169,27 @@ const Shipment = () => {
 
     dispatch(contactData({ [field]: value }));
   };
-  console.log(JSON.stringify(formData));
+  const handleCashOnDelivery = () => {
+    sendData({ userId, products, amount, address, status });
+    sendEmail(formData.email);
+    addOrder(dispatch, { userId, products, amount, address, status });
+    dispatch(clearCart());
+  };
+  useEffect(() => {
+    const getOrderDetails = async () => {
+      try {
+        const response = await userRequest.get(`/find/:${userId}`);
+        const order = response.data;
+        console.log(order._id); // This will log the order _id
+        // You can set the order data to state here if needed
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getOrderDetails();
+  }, []); // Empty dependency array means this effect runs once on mount
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     const errors = validateForm();
@@ -176,13 +197,10 @@ const Shipment = () => {
     // dispatch(resetContactData());
     if (Object.keys(errors).length === 0) {
       setFormSubmitted(true);
-      sendData({ userId, products, amount, address, status });
-      sendEmail(formData.email);
-      addOrder(dispatch, { userId, products, amount, address, status });
-      navigate("/");
-      dispatch(clearCart());
+      navigate("/success");
     }
   };
+
   return (
     <Container>
       <FormContainer>
@@ -300,6 +318,7 @@ const Shipment = () => {
         <Button
           onClick={(e) => {
             handleSubmit(e);
+            handleCashOnDelivery();
           }}
           disabled={!checkIfEmptyForm && formSubmitted}
         >

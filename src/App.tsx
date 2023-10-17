@@ -10,6 +10,7 @@ import Success from "./pages/Success";
 import Shipment from "./pages/Shipment";
 import { useAppSelector } from "./redux/store";
 import { createGlobalStyle } from "styled-components";
+import Payments from "./pages/Payments";
 
 const GlobalStyle = createGlobalStyle` 
 :root {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/success" element={<Success />} />
         <Route path="/shipment" element={<Shipment />} />
+        <Route path="/payment" element={<Payments />} />
       </Routes>
     </>
   );

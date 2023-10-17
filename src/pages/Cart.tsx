@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import PromoInfo from "../components/PromoInfo";
@@ -7,12 +5,7 @@ import Footer from "../components/Footer";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { useAppDispatch, useAppSelector } from "../redux/store";
-import StripeCheckout from "react-stripe-checkout";
-import { Token } from "react-stripe-checkout";
-import { userRequest } from "../requestMethods";
 import { DeleteOutline } from "@mui/icons-material";
-
-import { orderSuccess } from "../redux/orderSlice";
 import { Link } from "react-router-dom";
 import {
   addProduct,
@@ -20,6 +13,7 @@ import {
   clearCart,
   decreseProduct,
 } from "../redux/cartSlice";
+import { useState } from "react";
 type ButtonProps = {
   buttonType?: "filled";
 };
@@ -164,46 +158,19 @@ const StyledLink = styled(Link)`
 `;
 const Cart = () => {
   const cart = useAppSelector((state) => state.cart);
+  const shipCost = cart.total > 0 ? 30 : 0;
+
   const dispatch = useAppDispatch();
-  const [stripeToken, setStripeToken] = useState<Token>();
-  const history = useNavigate();
-  const onToken = (token: Token) => {
-    setStripeToken(token);
-  };
-
-  useEffect(() => {
-    const makeRequest = async () => {
-      if (stripeToken)
-        try {
-          const res = await userRequest.post("/checkout/payment", {
-            tokenId: stripeToken.id,
-            amount: cart.total * 100,
-          });
-          dispatch(orderSuccess());
-          history("/success", { state: { data: res.data } });
-        } catch (err) {
-          console.log("it gives this error " + err);
-        }
-    };
-
-    if (stripeToken) makeRequest();
-  }, [stripeToken, cart.total, history]);
-
   return (
     <Container>
       <Navbar />
       <PromoInfo />
       <Wrapper>
-        <Title>YOUR CART</Title>
+        <Title>Koszyk</Title>
         <Top>
           <TopButton onClick={() => dispatch(clearCart())}>
-            Clear Cart
+            Wyczyść koszyk
           </TopButton>
-          <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
-            <TopText>Your Wishlist(0)</TopText>
-          </TopTexts>
-          <TopButton buttonType="filled">CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>
           <Information>
@@ -283,36 +250,20 @@ const Cart = () => {
             <Hr />
           </Information>
           <Summary>
-            <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+            <SummaryTitle>Podsumowanie zamówienia</SummaryTitle>
             <SummaryItem>
-              <SummaryItemText>Subtotal</SummaryItemText>
+              <SummaryItemText>Koszt towaru</SummaryItemText>
               <SummaryItemPrice>{cart.total}PLN</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>5.90PLN</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-              <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>-5.90PLN</SummaryItemPrice>
+              <SummaryItemText>Koszt wysyłki</SummaryItemText>
+              <SummaryItemPrice>{shipCost}PLN</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>{cart.total}PLN</SummaryItemPrice>
+              <SummaryItemPrice>{cart.total + shipCost}PLN</SummaryItemPrice>
             </SummaryItem>
-            {/* {process.env.REACT_APP_STRIPE ? (
-              <StripeCheckout
-                name="FABICO"
-                image="https://avatars.githubusercontent.com/u/1486366?v=4"
-                description={`Your total is $${cart.total}`}
-                amount={cart.total * 100}
-                token={onToken}
-                stripeKey={process.env.REACT_APP_STRIPE}
-              ></StripeCheckout>
-            ) : (
-              <div>Stripe key is not defined</div>
-            )} */}{" "}
-            <StyledLink to="/shipment">
+            <StyledLink to="/payment">
               <SummaryButton disabled={cart.quantity === 0}>
                 Wysyłka
               </SummaryButton>
