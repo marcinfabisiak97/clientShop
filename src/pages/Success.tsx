@@ -5,43 +5,34 @@ import { useAppDispatch, useAppSelector } from "../redux/store";
 import { orderFailure } from "../redux/orderSlice";
 import { clearCart } from "../redux/cartSlice";
 import { Link } from "react-router-dom";
-const Success = () => {
-  const location = useLocation();
-  const data = location.state ? location.state.data : false;
-  const cart = useAppSelector((state) => state.cart);
 
+const Success = () => {
+  const userId = useAppSelector((state) => {
+    if (state.user.currentUser.others) return state.user.currentUser.others._id;
+  });
+  const [orderByCash, setOrderByCash] = useState("");
   const dispatch = useAppDispatch();
-  const [orderId, setOrderId] = useState(null);
-  const orderCreated = useRef<boolean>(false);
-  const createOrder = async () => {
-    if (!orderCreated.current) {
-      try {
-        const res = await userRequest.post("/orders", {
-          userId: location.state.data.id,
-          products: cart.products.map((item) => ({
-            productId: item._id,
-            quantity: item.quantity,
-          })),
-          amount: cart.total,
-          address: data.billing_details ? data.billing_details.address : null,
-        });
-        setOrderId(res.data._id);
-        orderCreated.current = true;
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
 
   useEffect(() => {
     return () => {
-      if (data.paid) {
-        createOrder();
-      }
       dispatch(clearCart());
       dispatch(orderFailure());
     };
-  }, [data.paid]);
+  }, []);
+
+  useEffect(() => {
+    const getOrderDetails = async () => {
+      try {
+        const response = await userRequest.get(`orders/find/${userId}`);
+        const order = response.data;
+        setOrderByCash(order[order.length - 1]._id);
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getOrderDetails();
+  }, []);
 
   return (
     <div
@@ -53,8 +44,8 @@ const Success = () => {
         justifyContent: "center",
       }}
     >
-      {orderId !== null
-        ? `Order has been created successfully. Your order number is ${orderId}`
+      {orderByCash.length !== 0
+        ? `Order has been created successfully. Your order number is ${orderByCash}`
         : "Order generating"}
       <Link to={`/`}>
         <button style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button>{" "}

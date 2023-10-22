@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import Success from "./pages/Success";
 import Shipment from "./pages/Shipment";
+import Orders from "./components/Orders";
+import User from "./components/User";
 import { useAppSelector } from "./redux/store";
 import { createGlobalStyle } from "styled-components";
 import Payments from "./pages/Payments";
@@ -38,6 +40,8 @@ function App() {
         <Route path="/success" element={<Success />} />
         <Route path="/shipment" element={<Shipment />} />
         <Route path="/payment" element={<Payments />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/user" element={<User />} />
       </Routes>
     </>
   );

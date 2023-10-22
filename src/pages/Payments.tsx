@@ -72,9 +72,26 @@ const Payments = () => {
   const status = "pending";
   const dispatch = useAppDispatch();
   const history = useNavigate();
-  const [error,setError] = useState("")
+  const [error, setError] = useState("");
   const handlePaymentSuccess = async (token: Token) => {
     setStripeToken(token);
+  };
+  const createOrder = async (state: { data: any }) => {
+    try {
+      const res = await userRequest.post("/orders", {
+        userId: userId,
+        products: cart.products.map((item) => ({
+          productId: item._id,
+          quantity: item.quantity,
+        })),
+        amount: cart.total,
+        address: state.data.billing_details
+          ? state.data.billing_details.address
+          : null,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     const makeRequest = async () => {
@@ -84,10 +101,11 @@ const Payments = () => {
             tokenId: stripeToken.id,
             amount: cart.total * 100,
           });
+          console.log(res);
           dispatch(orderSuccess());
-          history("/success", { state: { data: res.data } });
-          
-        } catch (err:any) {
+          history("/success");
+          if (res.data.paid) createOrder({ data: res.data });
+        } catch (err: any) {
           console.log("it gives this error " + err);
           setError(err.response.data);
         }
@@ -109,7 +127,6 @@ const Payments = () => {
           amount={amount * 100}
           name="Your Company Name"
           description="Payment Description"
-          
           currency="PLN"
           billingAddress
           shippingAddress

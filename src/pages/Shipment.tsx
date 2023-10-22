@@ -175,20 +175,6 @@ const Shipment = () => {
     addOrder(dispatch, { userId, products, amount, address, status });
     dispatch(clearCart());
   };
-  useEffect(() => {
-    const getOrderDetails = async () => {
-      try {
-        const response = await userRequest.get(`/find/:${userId}`);
-        const order = response.data;
-        console.log(order._id); // This will log the order _id
-        // You can set the order data to state here if needed
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getOrderDetails();
-  }, []); // Empty dependency array means this effect runs once on mount
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();

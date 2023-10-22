@@ -44,6 +44,7 @@ const LinkTag = styled(Link)`
   color: inherit;
 `;
 const StyledLink = styled(Link)`
+  padding: 1rem;
   text-decoration: none;
   color: inherit;
 `;
@@ -69,8 +70,12 @@ const Navbar = () => {
         <Right>
           {loggedIn ? (
             <>
+              {" "}
+              <StyledLink to="/orders">Zamówienia</StyledLink>
               <MenuItem>Zalogowanay jako: {userName} </MenuItem>
-              <MenuItem onClick={() => dispatch(logOut())}>Wylogowanie</MenuItem>
+              <MenuItem onClick={() => dispatch(logOut())}>
+                Wylogowanie
+              </MenuItem>
             </>
           ) : (
             <>

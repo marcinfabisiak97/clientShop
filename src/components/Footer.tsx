@@ -82,7 +82,9 @@ const Footer = () => {
         <List>
           {loggedIn ? (
             <>
-              <ListItem>My Account</ListItem>
+              <ListItem>
+                <StyledLink to="/user">My Account</StyledLink>
+              </ListItem>
               <ListItem>Order Tracking</ListItem>
               <ListItem>Terms</ListItem>
             </>

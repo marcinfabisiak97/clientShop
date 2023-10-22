@@ -2,6 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 interface Others {
   _id?: string;
   username?: string;
+  firstname?:string;
+  lastname?:string;
+  email?:string;
+  isAdmin?:string;
+  createdAt?:string;
+  updatedAt?:string;
 }
 interface CurrentUser {
   others?: Others;
@@ -9,7 +15,6 @@ interface CurrentUser {
 }
 interface User {
   currentUser: CurrentUser;
-
   isFetching: boolean;
   error: boolean;
   loggedIn: boolean;
