@@ -5,6 +5,7 @@ import {
   registerSuccess,
   registerFailure,
 } from "./newUserSlice";
+import { updateUserStart,updateUserSuccess,updateUserFailure } from "./updateUserSlice";
 import { addProduct } from "./cartSlice";
 import { AppDispatch } from "./store";
 
@@ -47,6 +48,19 @@ export const register = async (
     dispatch(registerSuccess(res.data));
   } catch (err: any) {
     dispatch(registerFailure());
+  }
+};
+export const updateUser = async (
+  id: string,
+  user: {},
+  dispatch: AppDispatch
+) => {
+  dispatch(updateUserStart());
+  try {
+    const res = await userRequest.put(`/users/${id}`, user);
+    dispatch(updateUserSuccess({ id, user }));
+  } catch (err) {
+    dispatch(updateUserFailure());
   }
 };
 export const addOrder = async (dispatch: AppDispatch, order: Order) => {

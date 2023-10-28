@@ -4,6 +4,7 @@ interface Others {
   username?: string;
   firstname?:string;
   lastname?:string;
+  password?: string;
   email?:string;
   isAdmin?:string;
   createdAt?:string;
@@ -49,7 +50,7 @@ const userSlice = createSlice({
       state.error = false;
       state.loggedIn = false;
       state.currentUser = {};
-    },
+    }
   },
 });
 export const { loginStart, loginSuccess, loginFailure, logOut } =

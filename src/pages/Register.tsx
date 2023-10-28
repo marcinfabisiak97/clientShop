@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { register } from "../redux/apiCalls";
+import { useNavigate } from "react-router-dom";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -46,7 +47,28 @@ const Button = styled.button`
     background-color: #b1f5bd;
   }
 `;
+const PopupOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+`;
+const Popup = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+`;
 const Register = () => {
+  const navigate = useNavigate();
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
@@ -55,9 +77,14 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [match, setMatch] = useState(true);
   const [formFilled, setFormFilled] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const dispatch = useAppDispatch();
   const { isFetching, error } = useAppSelector((state) => state.newUser);
   const [errorMessage, setErrorMessage] = useState(false);
+  const closePopup = () => {
+    setShowPopup(false);
+    navigate("/");
+  };
   const handleRegister = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -77,6 +104,7 @@ const Register = () => {
       return;
     } else {
       setFormFilled(false);
+      setShowPopup(true);
       register(dispatch, { firstname, lastname, username, password, email });
     }
     if (error) setErrorMessage(true);
@@ -141,6 +169,16 @@ const Register = () => {
             CREATE AN ACCOUNT
           </Button>{" "}
           {formFilled && <Warning>Please fill in all fields</Warning>}
+          {showPopup && (
+            <>
+              <PopupOverlay onClick={closePopup} />
+              <Popup>
+                <h2>Registration Successful!</h2>
+                <p>Your account has been successfully registered.</p>
+                <Button onClick={closePopup}>Close</Button>
+              </Popup>
+            </>
+          )}
         </Form>
       </Wrapper>
     </Container>

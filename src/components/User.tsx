@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
-import { userRequest } from "../requestMethods";
 import { useAppSelector } from "../redux/store";
 import styled from "styled-components";
 import { formatCreatedAt } from "../Utils";
 import { Link } from "react-router-dom";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -25,38 +24,34 @@ const StyledLink = styled(Link)`
   padding: 1rem;
   border-radius: 5px;
 `;
+
 const User = () => {
-  const user = useAppSelector((state) => state.user.currentUser.others);
-  const userId = useAppSelector((state) => {
-    if (state.user.currentUser.others) return state.user.currentUser.others._id;
+  const user = useAppSelector((state) => {
+    if (state.user.currentUser) return state.user.currentUser.others;
   });
-  useEffect(() => {
-    const getOrderDetails = async () => {
-      try {
-        const response = await userRequest.put(`users/${userId}`);
-        console.log(response);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getOrderDetails();
-  }, []);
+
   return (
     <>
       {user ? (
         <Wrapper>
+          <StyledLink to="/userupdate">Edytuj</StyledLink>
+          <h2></h2>
           <h3>User ID: {user._id}</h3>
           <p>Username: {user.username}</p>
           <p>First Name: {user.firstname}</p>
           <p>Last Name: {user.lastname}</p>
+          <p>Hasło: {user.password}</p>
           <p>Email: {user.email}</p>
-          <p>Is Admin: {user.isAdmin ? "Yes" : "No"}</p>
           <p>Created At: {formatCreatedAt(user.createdAt ?? "")}</p>
           <p>Updated At: {formatCreatedAt(user.updatedAt ?? "")}</p>{" "}
           <StyledLink to="/">wróć</StyledLink>
         </Wrapper>
       ) : (
-        <p>Loading user data...</p>
+        <Wrapper>
+          <SkeletonTheme baseColor="#f5fbfd" highlightColor="#037878">
+            <Skeleton circle height={200} width={200} />
+          </SkeletonTheme>
+        </Wrapper>
       )}{" "}
     </>
   );

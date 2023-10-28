@@ -85,12 +85,15 @@ const Footer = () => {
               <ListItem>
                 <StyledLink to="/user">My Account</StyledLink>
               </ListItem>
-              <ListItem>Order Tracking</ListItem>
-              <ListItem>Terms</ListItem>
+              <ListItem>
+                <StyledLink to="/orders">Zamówienia</StyledLink>
+              </ListItem>
             </>
           ) : (
             <>
-              <ListItem>Terms</ListItem>
+              <ListItem>
+                <StyledLink to="/terms">Warunki</StyledLink>
+              </ListItem>
             </>
           )}
         </List>

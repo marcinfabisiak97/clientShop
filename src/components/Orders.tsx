@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { userRequest } from "../requestMethods";
 import { useAppSelector } from "../redux/store";
 import styled from "styled-components";
@@ -26,6 +27,7 @@ const StyledLink = styled(Link)`
   border-radius: 5px;
 `;
 const Orders = () => {
+  const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState<
     [
       {
@@ -46,6 +48,7 @@ const Orders = () => {
       try {
         const response = await userRequest.get(`orders/find/${userId}`);
         setOrders(response.data);
+        setLoading(true);
       } catch (error) {
         console.error(error);
       }
@@ -54,24 +57,32 @@ const Orders = () => {
   }, []);
   return (
     <Wrapper>
-      {orders.map((order) => (
-        <div key={order._id}>
-          <h3>Numer zamówienia: {order._id}</h3>
-          <p>Kwota: {order.amount}</p>
-          <p>Status: {order.status}</p>
-          <p>Stworzone: {formatCreatedAt(order.createdAt)}</p>
-          {order.products.map((product) => (
-            <div key={product._id}>
-              <p>
-                Identyfikator przedmiotu:{" "}
-                {product.productId ? product.productId : product._id}
-              </p>
-              <p>Ilość: {product.quantity}</p>
-            </div>
-          ))}
-          <hr />
-        </div>
-      ))}
+      {loading ? (
+        orders.map((order) => (
+          <div key={order._id}>
+            <h3>Numer zamówienia: {order._id}</h3>
+            <p>Kwota: {order.amount}</p>
+            <p>Status: {order.status}</p>
+            <p>Stworzone: {formatCreatedAt(order.createdAt)}</p>
+            {order.products.map((product) => (
+              <div key={product._id}>
+                <p>
+                  Identyfikator przedmiotu:{" "}
+                  {product.productId ? product.productId : product._id}
+                </p>
+                <p>Ilość: {product.quantity}</p>
+              </div>
+            ))}
+            <hr />
+          </div>
+        ))
+      ) : (
+        <Wrapper>
+          <SkeletonTheme baseColor="#f5fbfd" highlightColor="#037878">
+            <Skeleton circle height={200} width={200} />
+          </SkeletonTheme>
+        </Wrapper>
+      )}
       <StyledLink to="/">wróć</StyledLink>
     </Wrapper>
   );

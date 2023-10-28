@@ -13,6 +13,8 @@ import User from "./components/User";
 import { useAppSelector } from "./redux/store";
 import { createGlobalStyle } from "styled-components";
 import Payments from "./pages/Payments";
+import UpdateUser from "./pages/UpdateUser";
+import Terms from "./pages/Terms";
 
 const GlobalStyle = createGlobalStyle` 
 :root {
@@ -42,6 +44,8 @@ function App() {
         <Route path="/payment" element={<Payments />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/user" element={<User />} />
+        <Route path="/userupdate" element={<UpdateUser />} />
+        <Route path="/terms" element={<Terms />} />
       </Routes>
     </>
   );

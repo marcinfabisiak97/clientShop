@@ -106,6 +106,11 @@ const Required = styled.div`
 const RequiredInvisible = styled.div`
   visibility: hidden;
 `;
+const Header = styled.h2`
+  text-align: center;
+  margin-bottom: 1rem;
+  align-self: center;
+`;
 const Shipment = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -194,6 +199,7 @@ const Shipment = () => {
           <Button> &lt; Powrót do koszyka</Button>
         </StyledLink>
         <Form>
+          <Header>Dane do wysyłki</Header>
           <input
             type="email"
             placeholder="mail"

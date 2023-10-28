@@ -5,6 +5,7 @@ import userReducer from "./userSlice";
 import orderReducer from "./orderSlice";
 import newUserReducer from "./newUserSlice";
 import userDataReducer from "./userDataSlice";
+import updateUserReducer from "./updateUserSlice";
 import {
   persistStore,
   persistReducer,
@@ -24,6 +25,7 @@ const persistConfig = {
 };
 const rootReducer = combineReducers({
   user: userReducer,
+  updateUser:updateUserReducer,
   cart: cartReducer,
   order: orderReducer,
   newUser: newUserReducer,

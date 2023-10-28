@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
-import PromoInfo from "../components/PromoInfo";
 import Products from "../components/Products";
-import Footer from "../components/Footer";
 const Container = styled.div``;
 const Title = styled.h2`
   margin: 20px;

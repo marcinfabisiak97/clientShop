@@ -86,14 +86,19 @@ const Amount = styled.span`
   margin: 0 5px;
 `;
 const Button = styled.button`
-  padding: 15px;
-  border: 1px solid black;
-  background-color: white;
+  padding: 10px;
+  font-weight: 600;
+  border: none;
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: rgb(132, 220, 132);
+  color: white;
   cursor: pointer;
-  font-weight: 500;
+  transition: 1s linear;
   &:hover {
-    background-color: #d6d4d4;
+    background-color: rgb(7, 121, 7);
   }
+  cursor: "pointer";
 `;
 const ProductPage = () => {
   const [product, setProduct] = useState<Product>();
