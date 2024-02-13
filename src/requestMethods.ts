@@ -1,6 +1,7 @@
 import axios from "axios";
-// "https://apishop-at7j.onrender.com/api";
-const BASE_URL = "http://localhost:5000/api"
+const BASE_URL ="https://apishop-at7j.onrender.com/api";
+// const BASE_URL ="https://sweet-blancmange-037826.netlify.app/api"
+// const BASE_URL = "http://localhost:5000/api"
 const localStorageItem = localStorage.getItem("persist:root");
 const TOKEN =
   localStorageItem &&

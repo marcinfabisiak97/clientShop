@@ -10,12 +10,13 @@ import { Link } from "react-router-dom";
 import { publicRequest } from "../requestMethods";
 import { useAppDispatch } from "../redux/store";
 import { addProduct } from "../redux/cartSlice";
-
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 type Product = {
   _id: string;
   title: string;
   description: string;
-  img: string;
+  img: string[];
   price: number;
   color: string[];
   quantity: number;
@@ -145,7 +146,7 @@ const ProductPage = () => {
         })
       );
   };
-
+  console.log(filter);
   return (
     <Container>
       {product && filter ? (
@@ -154,7 +155,13 @@ const ProductPage = () => {
           <PromoInfo />
           <Wrapper>
             <ImageContainer>
-              <Image src={product.img} />
+              <Carousel>
+                {product.img.map((img, index) => (
+                  <div key={index}>
+                    <img src={img} alt={`Product Image ${index}`} />
+                  </div>
+                ))}
+              </Carousel>
             </ImageContainer>
             <InfoContainer>
               <Title>{product.title}</Title>
@@ -162,14 +169,12 @@ const ProductPage = () => {
               <Price>{product.price}PLN</Price>
               <FilterContainer>
                 <Filter>
-                  <FilterTitle>kolor</FilterTitle>
-                  {filter
-                    .filter((item) => item.color[0] !== product.color[0])
-                    .map((item, index) => (
-                      <Link key={index} to={`/product/${item._id}`}>
-                        <FilterColor color={item.color[0]} />
-                      </Link>
-                    ))}
+                  <FilterTitle>kolor:</FilterTitle>
+                  {filter.map((item, index) => (
+                    <Link key={index} to={`/product/${item._id}`}>
+                      <FilterColor color={item.color[0]} />
+                    </Link>
+                  ))}
                 </Filter>
               </FilterContainer>
               <AddContainer>

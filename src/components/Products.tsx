@@ -6,7 +6,7 @@ import { publicRequest } from "../requestMethods";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 type ProductProps = {
   _id: string;
-  img: string;
+  img: string[];
   color: string[];
   createdAt: number;
   price: number;

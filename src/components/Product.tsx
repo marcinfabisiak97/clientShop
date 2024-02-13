@@ -10,7 +10,7 @@ import { useAppDispatch } from "../redux/store";
 import { addProduct } from "../redux/cartSlice";
 type ProductProps = {
   _id: string;
-  img: string;
+  img: string[];
   color: string[];
   createdAt: number;
   price: number;
@@ -90,7 +90,7 @@ const Product: React.FC<{ product: ProductProps }> = ({ product }) => {
         <Circle />
         {!isImageLoaded && <Skeleton circle height={200} width={200} />}
         <Image
-          src={product.img}
+          src={product.img[0]}
           onLoad={handleImageLoad}
           isImageLoaded={isImageLoaded}
         />

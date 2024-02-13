@@ -83,7 +83,7 @@ const Footer = () => {
           {loggedIn ? (
             <>
               <ListItem>
-                <StyledLink to="/user">My Account</StyledLink>
+                <StyledLink to="/user">Moje konto</StyledLink>
               </ListItem>
               <ListItem>
                 <StyledLink to="/orders">Zamówienia</StyledLink>
