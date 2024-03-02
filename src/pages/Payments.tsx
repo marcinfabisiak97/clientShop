@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { userRequest } from "../requestMethods";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { orderSuccess } from "../redux/orderSlice";
-import { sendData, sendEmail, addOrder } from "../redux/apiCalls";
+import { sendData, sendEmail, addOrder } from "../api/apiCalls";
 import { clearCart } from "../redux/cartSlice";
 import StripeCheckout, { Token } from "react-stripe-checkout";
 import CreditCardIcon from "@mui/icons-material/CreditCard";

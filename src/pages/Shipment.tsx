@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/store";
-import { addOrder, sendData } from "../redux/apiCalls";
+import { addOrder, sendData } from "../api/apiCalls";
 import { clearCart } from "../redux/cartSlice";
-import { sendEmail } from "../redux/apiCalls";
+import { sendEmail } from "../api/apiCalls";
 import { contactData } from "../redux/userDataSlice";
 import { userRequest } from "../requestMethods";
 const Container = styled.div`

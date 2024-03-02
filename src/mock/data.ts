@@ -1,4 +1,4 @@
-import Images from "./assets/exportFiles";
+import Images from "../assets/exportFiles";
 export const slidesData = [
   {
     id: 1,

@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
-import { slidesData } from "../data";
+import { slidesData } from "../mock/data";
 import { mobile } from "../responsive";
 type ArrowProps = {
   direction: "left" | "right"; // Define the direction prop with valid values

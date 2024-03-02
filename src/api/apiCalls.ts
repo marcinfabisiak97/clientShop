@@ -1,13 +1,13 @@
 import { publicRequest, userRequest } from "../requestMethods";
-import { loginFailure, loginStart, loginSuccess } from "./userSlice";
+import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
 import {
   registerStart,
   registerSuccess,
   registerFailure,
-} from "./newUserSlice";
-import { updateUserStart,updateUserSuccess,updateUserFailure } from "./updateUserSlice";
-import { addProduct } from "./cartSlice";
-import { AppDispatch } from "./store";
+} from "../redux/newUserSlice";
+import { updateUserStart,updateUserSuccess,updateUserFailure } from "../redux/updateUserSlice";
+import { addProduct } from "../redux/cartSlice";
+import { AppDispatch } from "../redux/store";
 
 interface Order {
   userId: string | undefined;

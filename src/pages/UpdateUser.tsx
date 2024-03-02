@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../redux/store";
-import { updateUser } from "../redux/apiCalls";
+import { updateUser } from "../api/apiCalls";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 const Wrapper = styled.div`
