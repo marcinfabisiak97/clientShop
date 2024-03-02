@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/store";
-import { login } from "../api/apiCalls";
+import { login } from "../api/login/login";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
