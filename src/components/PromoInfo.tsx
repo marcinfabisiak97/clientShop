@@ -10,7 +10,7 @@ const Container = styled.div`
   font-weight: 500;
 `;
 const PromoInfo = () => {
-  return <Container>Find the best deal</Container>;
+  return <Container>Zadbaj o Swoje zdrowie</Container>;
 };
 
 export default PromoInfo;

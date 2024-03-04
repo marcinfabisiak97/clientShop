@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/store";
-import { sendData } from "../api/apiCalls";
+import { sendData } from "../api/sendOrderData/sendOrderData";
 import { addOrder } from "../api/addOrder/addOrder";
 import { clearCart } from "../redux/cartSlice";
-import { sendEmail } from "../api/apiCalls";
+import { sendEmail } from "../api/sendEmail/sendEmail";
 import { contactData } from "../redux/userDataSlice";
 import { userRequest } from "../requestMethods";
 const Container = styled.div`
