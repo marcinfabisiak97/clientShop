@@ -1,34 +1,35 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+
 interface NewUser {
-  _id?: string;
+    _id?: string;
 }
 interface Register {
-  newUser: NewUser;
-  isFetching: boolean;
-  error: boolean;
+    newUser: NewUser;
+    isFetching: boolean;
+    error: boolean;
 }
 const initialState: Register = {
-  newUser: {},
-  isFetching: false,
-  error: false,
+    newUser: {},
+    isFetching: false,
+    error: false,
 };
 const newUserSlice = createSlice({
-  name: "newUser",
-  initialState,
-  reducers: {
-    registerStart: (state) => {
-      state.isFetching = true;
+    name: 'newUser',
+    initialState,
+    reducers: {
+        registerStart: (state) => {
+            state.isFetching = true;
+        },
+        registerSuccess: (state, action) => {
+            state.isFetching = false;
+            state.newUser = action.payload;
+        },
+        registerFailure: (state) => {
+            state.isFetching = false;
+            state.error = true;
+        },
     },
-    registerSuccess: (state, action) => {
-      state.isFetching = false;
-      state.newUser = action.payload;
-    },
-    registerFailure: (state) => {
-      state.isFetching = false;
-      state.error = true;
-    },
-  },
 });
 export const { registerStart, registerSuccess, registerFailure } =
-  newUserSlice.actions;
+    newUserSlice.actions;
 export default newUserSlice.reducer;

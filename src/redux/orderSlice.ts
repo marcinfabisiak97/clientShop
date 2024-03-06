@@ -1,22 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 interface Status {
-  paid: boolean;
+    paid: boolean;
 }
 const initialState: Status = {
-  paid: false,
+    paid: false,
 };
 const orderSlice = createSlice({
-  name: "order",
-  initialState,
-  reducers: {
-    orderSuccess: (state) => {
-      state.paid = true;
+    name: 'order',
+    initialState,
+    reducers: {
+        orderSuccess: (state) => {
+            state.paid = true;
+        },
+        orderFailure: (state) => {
+            state.paid = false;
+        },
     },
-    orderFailure: (state) => {
-      state.paid = false;
-    },
-  },
 });
 export const { orderSuccess, orderFailure } = orderSlice.actions;
 export default orderSlice.reducer;
