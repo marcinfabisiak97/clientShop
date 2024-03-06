@@ -13,7 +13,10 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  ${mobile({ flexWrap: "wrap" })};
+
+  @media (max-width: 425px) {
+    flex-direction: column;
+  }
 `;
 const Logo = styled.h1`
   font-weight: 700;

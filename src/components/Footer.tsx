@@ -9,7 +9,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useAppSelector, useAppDispatch } from "../redux/store";
 const Container = styled.div`
   display: flex;
-  ${mobile({ flexDirection: "column" })};
+  @media (max-width: 425px) {
+    flex-direction: column;
+  }
 `;
 const Left = styled.div`
   flex: 1;

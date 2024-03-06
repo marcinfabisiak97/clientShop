@@ -26,15 +26,25 @@ const Wrapper = styled.div`
   padding: 50px;
   display: flex;
   align-items: center;
+  @media (max-width: 425px) {
+    flex-direction: column;
+  }
 `;
 const ImageContainer = styled.div`
   flex: 1;
   display: flex;
   justify-content: center;
+  @media (max-width: 425px) {
+    width: 100%;
+    flex: 2;
+  }
 `;
 const Image = styled.img`
-  width: 100%;
+  max-width: 100%;
   object-fit: contain;
+  @media (max-width: 425px) {
+    max-width: 80%;
+  }
 `;
 const InfoContainer = styled.div`
   flex: 2;
@@ -43,9 +53,15 @@ const InfoContainer = styled.div`
 const Title = styled.h2`
   font-size: 25px;
   font-weight: 200;
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
 const Description = styled.p`
   margin: 20px 0;
+  @media (max-width: 768px) {
+    font-size: 10px;
+  }
 `;
 const Price = styled.p`
   font-weight: 100;
@@ -158,7 +174,7 @@ const ProductPage = () => {
               <Carousel>
                 {product.img.map((img, index) => (
                   <div key={index}>
-                    <img src={img} alt={`Product Image ${index}`} />
+                    <Image src={img} alt={`Product Image ${index}`} />
                   </div>
                 ))}
               </Carousel>
