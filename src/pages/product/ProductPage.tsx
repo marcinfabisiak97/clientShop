@@ -1,17 +1,17 @@
-import styled from "styled-components";
-import Navbar from "../../components/Navbar";
-import PromoInfo from "../../components/PromoInfo";
-import Footer from "../../components/Footer";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
-import { useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { publicRequest } from "../../requestMethods";
-import { useAppDispatch } from "../../redux/store";
-import { addProduct } from "../../redux/cartSlice";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import styled from 'styled-components';
+import Navbar from '../../components/Navbar';
+import PromoInfo from '../../components/PromoInfo';
+import Footer from '../../components/Footer';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
+import { useLocation, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { publicRequest } from '../../requestMethods';
+import { useAppDispatch } from '../../redux/store';
+import { addProduct } from '../../redux/cartSlice';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+
 type Product = {
   _id: string;
   title: string;
@@ -115,18 +115,18 @@ const Button = styled.button`
   &:hover {
     background-color: rgb(7, 121, 7);
   }
-  cursor: "pointer";
+  cursor: 'pointer';
 `;
 const ProductPage = () => {
   const [product, setProduct] = useState<Product>();
   const [filter, setFilter] = useState<Product[]>();
   const [quantity, setQuantity] = useState(1);
   const location = useLocation();
-  const id = location.pathname.split("/")[2];
+  const id = location.pathname.split('/')[2];
   const dispatch = useAppDispatch();
   const handleQuantity = (type: string) => {
-    if (quantity > 1 && type === "dec") setQuantity(quantity - 1);
-    if (type === "inc") setQuantity(quantity + 1);
+    if (quantity > 1 && type === 'dec') setQuantity(quantity - 1);
+    if (type === 'inc') setQuantity(quantity + 1);
   };
 
   useEffect(() => {
@@ -159,7 +159,7 @@ const ProductPage = () => {
         addProduct({
           product: product,
           quantity: quantity,
-        })
+        }),
       );
   };
 
@@ -170,8 +170,10 @@ const ProductPage = () => {
           <Navbar />
           <PromoInfo />
           <Wrapper>
+            {/* make another component with ImageContainer!!!! */}
             <ImageContainer>
               <Carousel>
+                {/* change the name of img it should be images */}
                 {product.img.map((img, index) => (
                   <div key={index}>
                     <Image src={img} alt={`Product Image ${index}`} />
@@ -183,6 +185,7 @@ const ProductPage = () => {
               <Title>{product.title}</Title>
               <Description>{product?.description}</Description>
               <Price>{product.price}PLN</Price>
+              {/* chanage to separate component */}
               <FilterContainer>
                 <Filter>
                   <FilterTitle>kolor:</FilterTitle>
@@ -193,11 +196,12 @@ const ProductPage = () => {
                   ))}
                 </Filter>
               </FilterContainer>
+              {/* chanage to separate component */}
               <AddContainer>
                 <AmountContainer>
-                  <RemoveIcon onClick={() => handleQuantity("dec")} />
+                  <RemoveIcon onClick={() => handleQuantity('dec')} />
                   <Amount>{quantity}</Amount>
-                  <AddIcon onClick={() => handleQuantity("inc")} />
+                  <AddIcon onClick={() => handleQuantity('inc')} />
                 </AmountContainer>
                 <Button onClick={() => handleClick()}>Dodaj do koszyka</Button>
               </AddContainer>
