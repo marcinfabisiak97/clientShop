@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import { userRequest } from "../requestMethods";
-import { useAppSelector } from "../redux/store";
+import { userRequest } from "../../requestMethods";
+import { useAppSelector } from "../../redux/store";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { formatCreatedAt } from "../Utils";
+import { formatCreatedAt } from "../../Utils";
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;

@@ -4,10 +4,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import SearchIcon from "@mui/icons-material/Search";
-import { mobile } from "../responsive";
+import { mobile } from "../../responsive";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../redux/store";
-import { addProduct } from "../redux/cartSlice";
+import { useAppDispatch } from "../../redux/store";
+import { addProduct } from "../../redux/cartSlice";
 type ProductProps = {
   _id: string;
   img: string[];

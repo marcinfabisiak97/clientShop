@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import Products from "../components/Products";
+import Products from "../../features/product/Products";
 const Container = styled.div``;
 const Title = styled.h2`
   margin: 20px;

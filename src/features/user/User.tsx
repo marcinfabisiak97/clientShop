@@ -1,6 +1,6 @@
-import { useAppSelector } from "../redux/store";
+import { useAppSelector } from "../../redux/store";
 import styled from "styled-components";
-import { formatCreatedAt } from "../Utils";
+import { formatCreatedAt } from "../../Utils";
 import { Link } from "react-router-dom";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 const Wrapper = styled.div`
@@ -9,10 +9,7 @@ const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 20px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  height: 100vh;
 `;
 const StyledLink = styled(Link)`
   text-decoration: none;

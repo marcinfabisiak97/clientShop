@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../redux/store";
-import { register } from "../api/register/register";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { register } from "../../api/register/register";
 import { useNavigate } from "react-router-dom";
 const Container = styled.div`
   width: 100vw;

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Product from "./Product";
-import { mobile } from "../responsive";
-import { publicRequest } from "../requestMethods";
+import { mobile } from "../../responsive";
+import { publicRequest } from "../../requestMethods";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 type ProductProps = {
   _id: string;

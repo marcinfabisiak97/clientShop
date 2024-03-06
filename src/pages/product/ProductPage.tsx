@@ -1,15 +1,15 @@
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
-import PromoInfo from "../components/PromoInfo";
-import Footer from "../components/Footer";
+import Navbar from "../../components/Navbar";
+import PromoInfo from "../../components/PromoInfo";
+import Footer from "../../components/Footer";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { publicRequest } from "../requestMethods";
-import { useAppDispatch } from "../redux/store";
-import { addProduct } from "../redux/cartSlice";
+import { publicRequest } from "../../requestMethods";
+import { useAppDispatch } from "../../redux/store";
+import { addProduct } from "../../redux/cartSlice";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 type Product = {
@@ -162,7 +162,7 @@ const ProductPage = () => {
         })
       );
   };
-  console.log(filter);
+
   return (
     <Container>
       {product && filter ? (

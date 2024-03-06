@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import ProductsList from "./ProductsList";
+import ProductsList from "./product/ProductsList";
 import Slider from "../components/Slider";
 import PromoInfo from "../components/PromoInfo";
 
