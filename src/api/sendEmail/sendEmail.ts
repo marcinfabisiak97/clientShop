@@ -2,7 +2,7 @@ import { publicRequest } from '../../requestMethods';
 
 export const sendEmail = async (recipient: string) => {
     try {
-        const res = await publicRequest.post('/sendemail', {
+        await publicRequest.post('/sendemail', {
             recipient,
         });
     } catch (err) {

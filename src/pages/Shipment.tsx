@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -8,7 +8,6 @@ import { sendData } from '../api/sendOrderData/sendOrderData';
 import { clearCart } from '../redux/cartSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { contactData } from '../redux/userDataSlice';
-import { userRequest } from '../requestMethods';
 
 const Container = styled.div`
     height: 100vh;

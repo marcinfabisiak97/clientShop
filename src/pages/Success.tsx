@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { clearCart } from '../redux/cartSlice';

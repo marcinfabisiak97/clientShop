@@ -1,8 +1,8 @@
 import { publicRequest } from '../../requestMethods';
-
-export const sendData = async (data: {}) => {
+import { type InterSendData } from './InterfaceSendData';
+export const sendData = async (data: InterSendData) => {
     try {
-        const res = await publicRequest.post('/sendorderdetails', {
+        await publicRequest.post('/sendorderdetails', {
             data,
         });
     } catch (err) {

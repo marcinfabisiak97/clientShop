@@ -15,7 +15,6 @@ import Shipment from './pages/Shipment';
 import Success from './pages/Success';
 import Terms from './pages/Terms';
 import UpdateUser from './pages/UpdateUser';
-import { useAppSelector } from './redux/store';
 
 const GlobalStyle = createGlobalStyle` 
 :root {
@@ -25,8 +24,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-    const user = useAppSelector((state) => state.user.currentUser);
-
     return (
         <>
             <GlobalStyle />
