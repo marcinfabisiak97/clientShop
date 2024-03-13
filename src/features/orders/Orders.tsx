@@ -1,62 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 
+import { StyledLink, Wrapper } from '../../components/ui/orderStyles';
 import { useAppSelector } from '../../redux/store';
 import { userRequest } from '../../requestMethods';
+import { type InterOrder } from '../../types/InterfaceOrder';
 import { formatCreatedAt } from '../../Utils';
 
-const Wrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-`;
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: inherit;
-    overflow: hidden;
-    display: inline-block;
-    background: linear-gradient(rgb(40, 160, 229), rgb(1, 94, 148));
-    border: 0px;
-    padding: 1rem;
-    border-radius: 5px;
-`;
-const Orders = () => {
+const Orders: React.FC = () => {
     const [loading, setLoading] = useState(false);
-    const [orders, setOrders] = useState<
-        [
-            {
-                _id: string;
-                products: any[];
-                amount: number;
-                status: string;
-                createdAt: string;
-            },
-        ]
-    >([{ _id: '', products: [], amount: 0, status: '', createdAt: '' }]);
+    const [orders, setOrders] = useState<InterOrder[]>([
+        { _id: '', products: [], amount: 0, status: '', createdAt: '' },
+    ]);
 
     const userId = useAppSelector((state) => {
-        if (state.user.currentUser.others)
-            return state.user.currentUser.others._id;
+        return state.user.currentUser.others?._id;
     });
     useEffect(() => {
-        const getOrderDetails = async () => {
+        const getOrderDetails = async (): Promise<void> => {
             try {
                 const response = await userRequest.get(`orders/find/${userId}`);
-                setOrders(response.data);
+                setOrders(response.data as InterOrder[]);
                 setLoading(true);
             } catch (error) {
                 console.error(error);
             }
         };
-        getOrderDetails();
+        void getOrderDetails();
     }, []);
     return (
         <Wrapper>
@@ -71,7 +41,7 @@ const Orders = () => {
                             <div key={product._id}>
                                 <p>
                                     Identyfikator przedmiotu:{' '}
-                                    {product.productId
+                                    {product.productId !== undefined
                                         ? product.productId
                                         : product._id}
                                 </p>

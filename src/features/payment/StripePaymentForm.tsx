@@ -10,7 +10,7 @@ const StripePaymentForm: React.FC<StripePaymentFormProps> = ({
     amount,
     onPaymentSuccess,
 }) => {
-    const handleToken = (token: Token) => {
+    const handleToken = (token: Token): void => {
         // Send the token to your server for further processing
         onPaymentSuccess(token);
     };
@@ -18,7 +18,7 @@ const StripePaymentForm: React.FC<StripePaymentFormProps> = ({
     return (
         <StripeCheckout
             token={handleToken}
-            stripeKey={process.env.REACT_APP_STRIPE || ''}
+            stripeKey={process.env.REACT_APP_STRIPE ?? ''}
             amount={amount}
             name="Your Company Name"
             description="Payment Description"

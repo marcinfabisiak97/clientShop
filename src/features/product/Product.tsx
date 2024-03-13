@@ -4,85 +4,23 @@ import React, { useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 
+import {
+    Circle,
+    Container,
+    Icon,
+    Image,
+    Info,
+} from '../../components/ui/productStyles';
 import { addProduct } from '../../redux/cartSlice';
 import { useAppDispatch } from '../../redux/store';
-import { mobile } from '../../responsive';
+import { type InterProduct } from '../../types/InterfaceProduct';
 
-interface ProductProps {
-    _id: string;
-    img: string[];
-    color: string[];
-    createdAt: number;
-    price: number;
-    title: string;
-    description: string;
-    quantity: number;
-}
-const Info = styled.div`
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.2);
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.5s ease;
-    cursor: pointer;
-`;
-const Container = styled.div`
-    flex: 1;
-    margin: 5px;
-    //min-width: 280px;
-    height: 350px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f5fbfd;
-    position: relative;
-    ${mobile({ margin: '0' })};
-    &:hover ${Info} {
-        opacity: 1;
-    }
-`;
-const Circle = styled.div`
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background-color: white;
-    position: absolute;
-    z-index: 0;
-`;
-const Image = styled.img<{ isImageLoaded: boolean }>`
-    height: 95%;
-    z-index: 2;
-    display: ${(isImageLoaded) => (isImageLoaded ? 'block' : 'none')};
-`;
-const Icon = styled.div`
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px;
-    transition: all 0.5s ease;
-    &:hover {
-        background-color: #e9f5f5;
-        transform: scale(1.1);
-    }
-`;
-const Product: React.FC<{ product: ProductProps }> = ({ product }) => {
+const Product: React.FC<{ product: InterProduct }> = ({ product }) => {
     const dispatch = useAppDispatch();
     const [isImageLoaded, setIsImageLoaded] = useState(false);
 
-    const handleImageLoad = () => {
+    const handleImageLoad = (): void => {
         setIsImageLoaded(true);
     };
 

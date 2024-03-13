@@ -4,16 +4,8 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { publicRequest } from '../requestMethods';
+import { type InterProduct } from '../types/InterfaceProduct';
 
-interface Product {
-    _id: string;
-    title: string;
-    description: string;
-    img: string[];
-    price: number;
-    color: string[];
-    quantity: number;
-}
 const Image = styled.img`
     max-width: 100%;
     object-fit: contain;
@@ -30,15 +22,15 @@ const ImageWrapper = styled.div`
         flex: 2;
     }
 `;
-const ImageContainer = () => {
+const ImageContainer: React.FC = () => {
     const location = useLocation();
     const id = location.pathname.split('/')[2];
-    const [product, setProduct] = useState<Product>();
+    const [product, setProduct] = useState<InterProduct | undefined>();
     useEffect(() => {
-        const getProducts = async () => {
+        const getProducts = async (): Promise<void> => {
             try {
                 const res = await publicRequest.get(`/products/find/${id}`);
-                setProduct(res.data);
+                setProduct(res.data as InterProduct);
             } catch (err) {
                 console.log(err);
             }
@@ -49,7 +41,7 @@ const ImageContainer = () => {
         <ImageWrapper>
             <Carousel>
                 {/* change the name of img it should be images */}
-                {product?.img && product.img.length > 0
+                {product?.img !== null && product?.img !== undefined
                     ? product.img.map((img, index) => (
                           <div key={index}>
                               <Image src={img} alt={`Product Image ${index}`} />

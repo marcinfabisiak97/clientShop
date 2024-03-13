@@ -6,10 +6,10 @@ import styled from 'styled-components';
 import Footer from '../../components/Footer';
 import ImageContainer from '../../components/ImageContainer';
 import InfoContainer from '../../components/InfoContainer';
-import { InterProduct } from '../../components/InterfaceProduct';
 import Navbar from '../../components/Navbar';
 import PromoInfo from '../../components/PromoInfo';
 import { publicRequest } from '../../requestMethods';
+import { type InterProduct } from '../../types/InterfaceProduct';
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -21,17 +21,17 @@ const Wrapper = styled.div`
     }
 `;
 
-const ProductPage = () => {
+const ProductPage: React.FC = () => {
     const [product, setProduct] = useState<InterProduct>();
     const [filter, setFilter] = useState<InterProduct[]>();
     const location = useLocation();
     const id = location.pathname.split('/')[2];
 
     useEffect(() => {
-        const getProducts = async () => {
+        const getProducts = async (): Promise<void> => {
             try {
                 const res = await publicRequest.get(`/products/find/${id}`);
-                setProduct(res.data);
+                setProduct(res.data as InterProduct);
             } catch (err) {
                 console.log(err);
             }
@@ -39,7 +39,7 @@ const ProductPage = () => {
         void getProducts();
     }, [id]);
     useEffect(() => {
-        const getFilter = async () => {
+        const getFilter = async (): Promise<void> => {
             try {
                 if (product?.color) {
                     const res = await publicRequest.get(`/products`);

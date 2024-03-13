@@ -1,37 +1,17 @@
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 
+import { StyledLink, Wrapper } from '../../components/ui/userStyles';
 import { useAppSelector } from '../../redux/store';
 import { formatCreatedAt } from '../../Utils';
 
-const Wrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-    height: 100vh;
-`;
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: inherit;
-    overflow: hidden;
-    display: inline-block;
-    background: linear-gradient(rgb(40, 160, 229), rgb(1, 94, 148));
-    border: 0px;
-    padding: 1rem;
-    border-radius: 5px;
-`;
-
-const User = () => {
+const User: React.FC = () => {
     const user = useAppSelector((state) => {
-        if (state.user.currentUser) return state.user.currentUser.others;
+        return state.user.currentUser?.others;
     });
 
     return (
         <>
-            {user ? (
+            {user !== null && user !== undefined ? (
                 <Wrapper>
                     <StyledLink to="/userupdate">Edytuj</StyledLink>
                     <h2></h2>

@@ -23,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
 }
 `;
 
-function App() {
+function App(): JSX.Element {
     return (
         <>
             <GlobalStyle />

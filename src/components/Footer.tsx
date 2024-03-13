@@ -1,74 +1,27 @@
 import EmailIcon from '@mui/icons-material/Email';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 
-import { useAppDispatch, useAppSelector } from '../redux/store';
-import { mobile } from '../responsive';
+import { useAppSelector } from '../redux/store';
+import {
+    Center,
+    ContactDetails,
+    Container,
+    Description,
+    Left,
+    List,
+    ListItem,
+    Location,
+    Logo,
+    Mail,
+    Phone,
+    Right,
+    StyledLink,
+    Title,
+} from './ui/footerStyles';
 
-const Container = styled.div`
-    display: flex;
-    @media (max-width: 425px) {
-        flex-direction: column;
-    }
-`;
-const Left = styled.div`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin-left: 1%;
-`;
-const Logo = styled.h2`
-    margin: 20px 0;
-    font-weight: 700;
-`;
-const Description = styled.p`
-    text-align: justify;
-`;
-const Center = styled.div`
-    flex: 1;
-    margin-left: 5%;
-`;
-const Title = styled.h2`
-    margin: 20px 0;
-    font-weight: 700;
-`;
-const List = styled.ul`
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-`;
-const ListItem = styled.li`
-    width: 50%;
-`;
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: inherit;
-`;
-const Right = styled.div`
-    flex: 1;
-`;
-const Contact = styled.h2``;
-const ContactDetails = styled.div`
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    vertical-align: middle;
-`;
-const Location = styled.div`
-    margin-left: 10px;
-`;
-const Phone = styled.div`
-    margin-left: 10px;
-`;
-const Mail = styled.div`
-    margin-left: 10px;
-`;
-const Footer = () => {
+const Footer = (): JSX.Element => {
     const loggedIn = useAppSelector((state) => state.user.loggedIn);
     return (
         <Container>
