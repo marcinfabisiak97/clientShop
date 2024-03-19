@@ -8,12 +8,12 @@ import { userRequest } from '../../requestMethods';
 
 export const updateUser = async (
     id: string,
-    user: {},
+    user: Record<string, unknown>,
     dispatch: AppDispatch,
-) => {
+): Promise<void> => {
     dispatch(updateUserStart());
     try {
-        const res = await userRequest.put(`/users/${id}`, user);
+        await userRequest.put(`/users/${id}`, user);
         dispatch(updateUserSuccess({ id, user }));
     } catch (err) {
         dispatch(updateUserFailure());

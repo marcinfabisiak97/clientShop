@@ -1,12 +1,9 @@
 import React from 'react';
 import StripeCheckout, { type Token } from 'react-stripe-checkout';
 
-interface StripePaymentFormProps {
-    amount: number;
-    onPaymentSuccess: (token: Token) => void;
-}
+import { type InterStripePaymentFormProps } from '../../types/InterfaceStripePaymentFormProps';
 
-const StripePaymentForm: React.FC<StripePaymentFormProps> = ({
+const StripePaymentForm: React.FC<InterStripePaymentFormProps> = ({
     amount,
     onPaymentSuccess,
 }) => {

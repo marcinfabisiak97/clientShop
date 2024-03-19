@@ -5,9 +5,6 @@ import styled from 'styled-components';
 import Products from '../../features/product/Products';
 
 const Container = styled.div``;
-const Title = styled.h2`
-    margin: 20px;
-`;
 
 const FilterContainer = styled.div`
     display: flex;
@@ -29,7 +26,7 @@ const Option = styled.option`
     cursor: pointer;
 `;
 
-const ProductsList = () => {
+const ProductsList = (): JSX.Element => {
     const location = useLocation();
     const cat = location.pathname.split('/')[2];
     const [filters, setFilter] = useState({ color: 'all' });

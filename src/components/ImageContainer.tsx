@@ -1,27 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { useLocation } from 'react-router-dom';
-import styled from 'styled-components';
 
 import { publicRequest } from '../requestMethods';
 import { type InterProduct } from '../types/InterfaceProduct';
+import { Image, ImageWrapper } from './ui/imageContainerStyles';
 
-const Image = styled.img`
-    max-width: 100%;
-    object-fit: contain;
-    @media (max-width: 425px) {
-        max-width: 80%;
-    }
-`;
-const ImageWrapper = styled.div`
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    @media (max-width: 425px) {
-        width: 100%;
-        flex: 2;
-    }
-`;
 const ImageContainer: React.FC = () => {
     const location = useLocation();
     const id = location.pathname.split('/')[2];

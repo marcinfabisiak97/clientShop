@@ -1,14 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface NewUser {
-    _id?: string;
-}
-interface Register {
-    newUser: NewUser;
-    isFetching: boolean;
-    error: boolean;
-}
-const initialState: Register = {
+import { type InterRegister } from '../types/InterfaceNewUserSlice';
+
+const initialState: InterRegister = {
     newUser: {},
     isFetching: false,
     error: false,

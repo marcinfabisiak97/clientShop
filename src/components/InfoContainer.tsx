@@ -1,8 +1,9 @@
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
+import useProduct from '../features/customHook/useProduct';
 import { addProduct } from '../redux/cartSlice';
 import { useAppDispatch } from '../redux/store';
 import { publicRequest } from '../requestMethods';
@@ -23,12 +24,11 @@ import {
 } from './ui/infoContainerStyles';
 
 const InfoContainer: React.FC = () => {
-    const [product, setProduct] = useState<InterProduct>();
+    const product = useProduct();
     const [filter, setFilter] = useState<InterProduct[]>();
     const [quantity, setQuantity] = useState(1);
     const dispatch = useAppDispatch();
-    const location = useLocation();
-    const id = location.pathname.split('/')[2];
+
     const handleQuantity = (type: string): void => {
         if (quantity > 1 && type === 'dec') setQuantity(quantity - 1);
         if (type === 'inc') setQuantity(quantity + 1);
@@ -42,17 +42,7 @@ const InfoContainer: React.FC = () => {
                 }),
             );
     };
-    useEffect(() => {
-        const getProducts = async (): Promise<void> => {
-            try {
-                const res = await publicRequest.get(`/products/find/${id}`);
-                setProduct(res.data as InterProduct);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        void getProducts();
-    }, [id]);
+
     useEffect(() => {
         const getFilter = async (): Promise<void> => {
             try {

@@ -1,54 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 
 import { updateUser } from '../api/updateUser/updateUser';
+import { Button, StyledLink, Wrapper } from '../components/ui/updateUserStyles';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 
-const Wrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-    box-shadow: 0px 0px 8px -1px rgba(66, 68, 90, 1);
-    border-radius: 10px;
-    width: 50vw;
-    height: 50vh;
-    margin: 5vh auto;
-    padding: 3rem;
-    section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 20px;
-    }
-`;
-const Button = styled.button`
-    text-decoration: none;
-    color: inherit;
-    overflow: hidden;
-    display: block;
-    background: linear-gradient(rgb(40, 160, 229), rgb(1, 94, 148));
-    border: 0px;
-    padding: 1rem;
-    border-radius: 5px;
-    /* Add the following properties to center the button */
-    margin: 0 auto;
-`;
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: inherit;
-    overflow: hidden;
-    display: inline-block;
-    background: linear-gradient(rgb(40, 160, 229), rgb(1, 94, 148));
-    border: 0px;
-    padding: 1rem;
-    border-radius: 5px;
-`;
-const UpdateUser = () => {
+const UpdateUser = (): JSX.Element => {
     const user = useAppSelector((state) => {
-        if (state.user.currentUser) return state.user.currentUser.others;
+        if (state.user.currentUser !== undefined)
+            return state.user.currentUser.others;
     });
     const [inputs, setInputs] = useState(user);
     const dispatch = useAppDispatch();
@@ -60,7 +19,7 @@ const UpdateUser = () => {
         e:
             | React.ChangeEvent<HTMLInputElement>
             | React.ChangeEvent<HTMLTextAreaElement>,
-    ) => {
+    ): void => {
         if ((e.target as HTMLInputElement).value !== undefined) {
             const target = e.target as HTMLInputElement;
             const { name, value } = target;
@@ -76,15 +35,15 @@ const UpdateUser = () => {
         }
     };
 
-    const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setInputs((prev) => {
-            return { ...prev, [e.target.name]: e.target.value };
-        });
-    };
+    // const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    //     setInputs((prev) => {
+    //         return { ...prev, [e.target.name]: e.target.value };
+    //     });
+    // };
 
-    const handleClick = (
+    const handleClick = async (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    ) => {
+    ): Promise<void> => {
         e.preventDefault();
 
         // if (
@@ -96,7 +55,13 @@ const UpdateUser = () => {
         //   updateUser(user._id, updatedUser, dispatch);
         // }
 
-        updateUser(user?._id!, { ...inputs }, dispatch);
+        const userId = user?._id;
+        if (userId !== undefined) {
+            await updateUser(userId, { ...inputs }, dispatch);
+        } else {
+            // Handle the case where user?._id is undefined
+            console.error('User ID is undefined');
+        }
     };
     return (
         <Wrapper>
@@ -157,7 +122,17 @@ const UpdateUser = () => {
                         }}
                     />
                 </section>
-                <Button onClick={handleClick}>Zmień</Button>
+                <Button
+                    onClick={(
+                        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+                    ) => {
+                        handleClick(e).catch((error) => {
+                            console.log(error);
+                        });
+                    }}
+                >
+                    Zmień
+                </Button>
             </form>
         </Wrapper>
     );

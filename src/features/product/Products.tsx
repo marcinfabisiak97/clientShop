@@ -6,11 +6,9 @@ import { publicRequest } from '../../requestMethods';
 import { type InterProduct } from '../../types/InterfaceProduct';
 import Product from './Product';
 
-type Filters = Record<string, string>;
-
 const Products: React.FC<{
     cat?: string;
-    filters?: Filters;
+    filters?: Record<string, string>;
     sort?: string;
 }> = ({ cat, filters, sort }) => {
     const [products, setProducts] = useState<InterProduct[]>([]);

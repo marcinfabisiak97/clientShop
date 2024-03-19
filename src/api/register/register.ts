@@ -15,7 +15,7 @@ export const register = async (
         password: string;
         email: string;
     },
-) => {
+): Promise<void> => {
     dispatch(registerStart());
     try {
         const res = await publicRequest.post('/auth/register', newUser);

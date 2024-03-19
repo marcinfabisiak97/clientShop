@@ -1,123 +1,31 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 import { addOrder } from '../api/addOrder/addOrder';
 import { sendEmail } from '../api/sendEmail/sendEmail';
 import { sendData } from '../api/sendOrderData/sendOrderData';
+import {
+    Button,
+    Container,
+    Form,
+    FormContainer,
+    Header,
+    Required,
+    RequiredInvisible,
+    StyledLink,
+    Wrapper,
+} from '../components/ui/shipmentStyles';
 import { clearCart } from '../redux/cartSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { contactData } from '../redux/userDataSlice';
 
-const Container = styled.div`
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-const FormContainer = styled.div`
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    min-height: 30rem;
-    min-width: 80rem;
-    padding: 2rem 0;
-    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-
-    @media (max-width: 1060px) {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-width: 40rem;
-        min-height: 10rem;
-        padding: 1rem;
-    }
-`;
-const Button = styled.button`
-    display: inline-block;
-    border: none;
-    padding: 1rem;
-    border-radius: 5px;
-    background-color: rgb(132, 220, 132);
-    color: white;
-    min-width: 8rem;
-    cursor: pointer;
-    transition: 1s linear;
-    &:hover {
-        background-color: rgb(7, 121, 7);
-    }
-`;
-const Form = styled.form`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-start;
-    font-size: 1rem;
-    input {
-        margin: 0.5rem 0;
-        min-width: 40rem;
-        border-radius: 5px;
-        border: 1px solid black;
-        padding: 0.5rem;
-    }
-
-    select {
-        margin: 1rem 0;
-        border-radius: 5px;
-        border: 1px solid black;
-        padding: 0.5rem;
-    }
-
-    button {
-        border: none;
-        padding: 1rem;
-        border-radius: 5px;
-        background-color: rgb(132, 220, 132);
-        color: white;
-        cursor: pointer;
-        transition: 1s linear;
-    }
-    button:hover {
-        background-color: rgb(7, 121, 7);
-    }
-`;
-const Wrapper = styled.div`
-    display: flex;
-    align-items: center;
-    select {
-        margin: 1rem 1rem 1rem 0;
-    }
-    input {
-        margin: 1rem 0;
-        min-width: 20rem;
-    }
-    div {
-        display: flex;
-        flex-direction: column;
-    }
-`;
-const StyledLink = styled(Link)`
-    text-decoration: none;
-    color: inherit;
-`;
-const Required = styled.div`
-    color: red;
-`;
-const RequiredInvisible = styled.div`
-    visibility: hidden;
-`;
-const Header = styled.h2`
-    text-align: center;
-    margin-bottom: 1rem;
-    align-self: center;
-`;
-const Shipment = () => {
+const Shipment = (): JSX.Element => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const userId = useAppSelector((state) => {
-        if (state.user.currentUser.others)
+        if (state.user.currentUser.others !== undefined) {
             return state.user.currentUser.others._id;
+        }
     });
     const productsInfo = useAppSelector((state) => state.cart.products);
     const products = productsInfo.map((product) => {
@@ -134,12 +42,12 @@ const Shipment = () => {
     );
     const [formSubmitted, setFormSubmitted] = useState(false);
 
-    const validateForm = () => {
+    const validateForm = (): Record<string, string> => {
         const errors: Record<string, string> = {};
         const validationRules: Record<string, RegExp> = {
             email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
             name: /^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s]+$/,
-            street: /^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s\d\/]+$/,
+            street: /^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s\d/]+$/,
             postCode: /^\d{2}-\d{3}$/,
             city: /^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s]+$/,
             phone: /^\d{9}$/,
@@ -158,12 +66,13 @@ const Shipment = () => {
             if (formData[field] === '') {
                 errors[field] = 'Pole jest wymagane';
             } else if (
-                validationRules[field] &&
+                typeof validationRules[field] === 'function' &&
                 !validationRules[field].test(formData[field])
             ) {
-                errors[field] = errorMessages[field] || 'Nieprawidłowe dane';
+                errors[field] = errorMessages[field] ?? 'Nieprawidłowe dane';
             }
         }
+
         return errors;
     };
     const handleInputChange = (
@@ -171,19 +80,19 @@ const Shipment = () => {
             | React.ChangeEvent<HTMLInputElement>
             | React.ChangeEvent<HTMLSelectElement>,
         field: string,
-    ) => {
+    ): void => {
         const value = event.target.value;
 
         dispatch(contactData({ [field]: value }));
     };
-    const handleCashOnDelivery = () => {
-        sendData({ userId, products, amount, address, status });
-        sendEmail(formData.email);
-        addOrder(dispatch, { userId, products, amount, address, status });
+    const handleCashOnDelivery = async (): Promise<void> => {
+        await sendData({ userId, products, amount, address, status });
+        await sendEmail(formData.email);
+        await addOrder(dispatch, { userId, products, amount, address, status });
         dispatch(clearCart());
     };
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = (event: React.FormEvent): void => {
         event.preventDefault();
         const errors = validateForm();
         setFormErrors(errors);
@@ -211,7 +120,7 @@ const Shipment = () => {
                         }}
                         required
                     />
-                    {formErrors.email ? (
+                    {formErrors.email !== undefined ? (
                         <Required>{formErrors.email}</Required>
                     ) : (
                         <RequiredInvisible>{goodText}</RequiredInvisible>
@@ -225,7 +134,7 @@ const Shipment = () => {
                         }}
                         required
                     />
-                    {formErrors.firstName ? (
+                    {formErrors.firstName !== undefined ? (
                         <Required>{formErrors.firstName}</Required>
                     ) : (
                         <RequiredInvisible>{goodText}</RequiredInvisible>
@@ -239,7 +148,7 @@ const Shipment = () => {
                         }}
                         required
                     />{' '}
-                    {formErrors.lastName ? (
+                    {formErrors.lastName !== undefined ? (
                         <Required>{formErrors.lastName}</Required>
                     ) : (
                         <RequiredInvisible>{goodText}</RequiredInvisible>
@@ -253,7 +162,7 @@ const Shipment = () => {
                         }}
                         required
                     />{' '}
-                    {formErrors.street ? (
+                    {formErrors.street !== undefined ? (
                         <Required>{formErrors.street}</Required>
                     ) : (
                         <RequiredInvisible>{goodText}</RequiredInvisible>
@@ -277,7 +186,7 @@ const Shipment = () => {
                             >
                                 <option>Polska</option>
                             </select>
-                            {formData.country && (
+                            {formData.country !== undefined && (
                                 <RequiredInvisible>
                                     {goodText}
                                 </RequiredInvisible>
@@ -293,7 +202,7 @@ const Shipment = () => {
                                 }}
                                 required
                             />{' '}
-                            {formErrors.postCode ? (
+                            {formErrors.postCode !== undefined ? (
                                 <Required>{formErrors.postCode}</Required>
                             ) : (
                                 <RequiredInvisible>
@@ -311,7 +220,7 @@ const Shipment = () => {
                         }}
                         required
                     />{' '}
-                    {formErrors.city ? (
+                    {formErrors.city !== undefined ? (
                         <Required>{formErrors.city}</Required>
                     ) : (
                         <RequiredInvisible>{goodText}</RequiredInvisible>
@@ -325,7 +234,7 @@ const Shipment = () => {
                         }}
                         required
                     />{' '}
-                    {formErrors.phone ? (
+                    {formErrors.phone !== undefined ? (
                         <Required>{formErrors.phone}</Required>
                     ) : (
                         <RequiredInvisible>{goodText}</RequiredInvisible>
@@ -334,7 +243,9 @@ const Shipment = () => {
                 <Button
                     onClick={(e) => {
                         handleSubmit(e);
-                        handleCashOnDelivery();
+                        handleCashOnDelivery().catch((error) => {
+                            console.log(error);
+                        });
                     }}
                     disabled={!checkIfEmptyForm && formSubmitted}
                 >

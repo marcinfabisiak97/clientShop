@@ -5,7 +5,7 @@ import { publicRequest } from '../../requestMethods';
 export const login = async (
     dispatch: AppDispatch,
     user: { username: string; password: string },
-) => {
+): Promise<void> => {
     dispatch(loginStart());
     try {
         const res = await publicRequest.post('/auth/login', user);

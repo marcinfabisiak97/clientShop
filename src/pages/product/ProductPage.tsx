@@ -41,20 +41,20 @@ const ProductPage: React.FC = () => {
     useEffect(() => {
         const getFilter = async (): Promise<void> => {
             try {
-                if (product?.color) {
+                if (product?.color !== null && product?.color !== undefined) {
                     const res = await publicRequest.get(`/products`);
-                    setFilter(res.data);
+                    setFilter(res.data as InterProduct[]);
                 }
             } catch (err) {
                 console.log(err);
             }
         };
-        getFilter();
+        void getFilter();
     }, [product?.color]);
 
     return (
         <Container>
-            {product && filter ? (
+            {product !== null && filter !== null ? (
                 <>
                     <Navbar />
                     <PromoInfo />

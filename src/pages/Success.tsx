@@ -6,10 +6,11 @@ import { orderFailure } from '../redux/orderSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { userRequest } from '../requestMethods';
 
-const Success = () => {
+const Success = (): JSX.Element => {
     const userId = useAppSelector((state) => {
-        if (state.user.currentUser.others)
+        if (state.user.currentUser.others !== undefined) {
             return state.user.currentUser.others._id;
+        }
     });
     const [orderByCash, setOrderByCash] = useState('');
     const dispatch = useAppDispatch();
@@ -22,17 +23,18 @@ const Success = () => {
     }, []);
 
     useEffect(() => {
-        const getOrderDetails = async () => {
+        const getOrderDetails = async (): Promise<void> => {
             try {
                 const response = await userRequest.get(`orders/find/${userId}`);
                 const order = response.data;
-                setOrderByCash(order[order.length - 1]._id);
+                const latestOrderId: string = order[order.length - 1]._id;
+                setOrderByCash(latestOrderId);
                 console.log(response);
             } catch (error) {
                 console.error(error);
             }
         };
-        getOrderDetails();
+        void getOrderDetails();
     }, []);
 
     return (

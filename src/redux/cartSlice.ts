@@ -1,20 +1,9 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-interface Product {
-    _id: string;
-    title: string;
-    description: string;
-    img: string[];
-    price: number;
-    color: string[];
-    quantity: number;
-}
-interface Cart {
-    products: Product[];
-    quantity: number;
-    total: number;
-}
-const initialState: Cart = { products: [], quantity: 0, total: 0 };
+import { type InterCartSlice } from '../types/InterfaceCartSlice';
+import { type InterProduct } from '../types/InterfaceProduct';
+
+const initialState: InterCartSlice = { products: [], quantity: 0, total: 0 };
 const cartSlice = createSlice({
     name: 'cart',
     initialState,
@@ -22,11 +11,11 @@ const cartSlice = createSlice({
         addProduct: (
             state,
             action: PayloadAction<{
-                product: Product;
+                product: InterProduct;
                 quantity: number;
             }>,
         ) => {
-            if (!action.payload.product?._id) {
+            if (action.payload.product?._id === undefined) {
                 return;
             }
 
@@ -34,7 +23,7 @@ const cartSlice = createSlice({
                 return product._id === action.payload.product._id;
             });
 
-            if (existingProduct) {
+            if (existingProduct !== undefined) {
                 existingProduct.quantity += action.payload.quantity;
                 state.total +=
                     action.payload.product.price * action.payload.quantity;
@@ -65,7 +54,7 @@ const cartSlice = createSlice({
             const existingProduct = state.products.find(
                 (product) => product._id === action.payload.product._id,
             );
-            if (existingProduct) {
+            if (existingProduct !== undefined) {
                 existingProduct.quantity -= 1;
                 state.total -=
                     action.payload.product.price * action.payload.quantity;

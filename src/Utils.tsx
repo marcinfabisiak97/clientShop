@@ -1,4 +1,4 @@
-export const formatCreatedAt = (createdAt: string) => {
+export const formatCreatedAt = (createdAt: string): string => {
     const options: Intl.DateTimeFormatOptions = {
         year: 'numeric',
         month: 'long',
